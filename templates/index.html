@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="col-md-4 ">
+  <h2 class="text-white bg-primary text-center p-2" >Insert Student Details</h2><br>
+  <form action="{% url 'insert_student' %}" method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+          <input type="text" class="form-control" placeholder="Entrer the Student Name..." name = 'name' required>
+      </div>
+
+      <div class="form-group">
+          <input type="text" class="form-control mt-2" placeholder="Entrer the Student Email..." name = 'email' required>
+      </div>
+
+      <div class="form-group">
+          <input type="number" class="form-control mt-2" placeholder="Entrer the Student Age..." name = 'age' required>
+          <div class="form-group mt-2">
+              <select id="gender" class="form-control" name = "gender" required>
+                <option selected>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+        
+      </div>
+      <div class="d-grid gap-2">
+          <button class="btn btn-primary mt-4" type="submit">Submit</button>
+      </div>
+  </form>
+</div>
+<div class="col-md-8">
+    <h2 class="text-center text-white bg-primary p-2"> Student Details </h2>
+    <div class="conf_if">
+      {% if messages %}
+      <div class="sms_error_and_success">
+        {% for message in messages  %}
+          <p class="{% if message.tags == 'success' %} success {% elif message.tags == 'error' %} error {% endif %}"> {{ message }} </p>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Age</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th> 
+          </tr>
+        </thead>
+        <tbody>
+            {% for st in students %}
+          <tr>
+            <th scope="row">{{st.id}}</th>
+            <td>{{st.name}}</td>
+            <td>{{st.email}}</td>
+            <td>{{st.age}}</td>
+            <td>{{st.gender}}</td>
+            <td>
+                <a href="{% url 'edit_student' st.id %}"><button type="button" class="btn btn-outline-primary">Edit</button></a> 
+            </td>
+            <td>
+                <a href="{% url 'confirmation_suppression' st.id %}"><button type="button" class="btn btn-outline-danger">Delete</button></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+</div>
+
+{% endblock %}

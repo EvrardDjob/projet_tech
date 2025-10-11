@@ -1,0 +1,34 @@
+{%extends 'base.html'%}
+{% load static %}
+{% block content %}
+<div class="col-md-4 ">
+    <h2 class="text-white bg-info text-center p-2" >Update Student Details</h2><br>
+    <form action="{% url 'edit_student' student.id %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Entrer the Student Name..." name = 'name' value =  "{{ student.name }}" required>
+    </div>
+
+    <div class="form-group">
+        <input type="email" class="form-control mt-2" placeholder="Entrer the Student Email..." name = 'email'  value =  "{{ student.email }}" required>
+    </div>
+
+    <div class="form-group">
+        <input type="number" class="form-control mt-2" placeholder="Entrer the Student Age..." name = 'age'   value =  "{{ student.age }}" required>
+        <div class="form-group mt-2">
+            <select id="gender" class="form-control" name = "gender" required>
+              <option selected>{{ student.gender }}</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+      
+    </div>
+    <div class="d-grid gap-2">
+        <button class="btn btn-primary mt-4" type="submit">Update</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+    
